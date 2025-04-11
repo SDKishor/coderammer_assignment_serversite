@@ -7,4 +7,6 @@ router.post('/register', authController.createUser)
 
 router.post('/login', authController.loginUser)
 
+router.get('/credit/:userid', authController.getUserCredit)
+
 export const userRoutes = router

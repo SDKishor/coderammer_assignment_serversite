@@ -45,7 +45,18 @@ const loginUser = async (email: string, password: string) => {
   }
 }
 
+const getUserCredit = async (id: string) => {
+  const user = await UserModel.findById(id)
+
+  if (!user) {
+    throw new AppError('User not found', StatusCodes.NOT_FOUND)
+  }
+
+  return user.credit
+}
+
 export const authService = {
   createUser,
   loginUser,
+  getUserCredit,
 }

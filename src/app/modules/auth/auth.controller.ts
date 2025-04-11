@@ -35,7 +35,28 @@ const loginUser = catchAsync(async (req, res) => {
   })
 })
 
+const getUserCredit = catchAsync(async (req, res) => {
+  const result = await authService.getUserCredit(req.params.userid)
+
+  if (!result) {
+    return sendResponse(res, {
+      statusCode: StatusCodes.BAD_REQUEST,
+      success: false,
+      message: 'Failed to get user credit',
+      data: null,
+    })
+  }
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'user credit fetched successfully',
+    data: result,
+  })
+})
+
 export const authController = {
   createUser,
   loginUser,
+  getUserCredit,
 }
