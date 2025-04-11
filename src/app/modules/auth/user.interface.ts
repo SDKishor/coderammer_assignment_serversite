@@ -1,10 +1,10 @@
-export type TRole = 'admin' | 'user';
+export type TRole = 'admin' | 'user'
 
 export interface IUser {
-  _id?: string;
-  name: string;
-  email: string;
-  password: string;
-  role: TRole;
-  isBlocked: boolean;
+  _id?: string
+  name: string
+  email: string
+  password: string
+  role: TRole
+  credit: number
 }

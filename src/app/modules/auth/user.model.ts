@@ -1,7 +1,7 @@
-import mongoose, { Model, Schema } from 'mongoose';
-import { IUser } from './user.interface';
-import bcrypt from 'bcrypt';
-import config from '../../config';
+import mongoose, { Model, Schema } from 'mongoose'
+import { IUser } from './user.interface'
+import bcrypt from 'bcrypt'
+import config from '../../config'
 
 const UserSchema = new Schema<IUser>(
   {
@@ -13,7 +13,7 @@ const UserSchema = new Schema<IUser>(
     email: {
       type: String,
       required: [true, 'Email is required'],
-      unique: true,
+      unique: [true, 'Email already exists'],
       match: [/^\S+@\S+\.\S+$/, 'Invalid email address'],
     },
     password: {
@@ -26,28 +26,30 @@ const UserSchema = new Schema<IUser>(
       enum: ['admin', 'user'],
       default: 'user',
     },
-    isBlocked: {
-      type: Boolean,
-      default: false,
+    credit: {
+      type: Number,
+      default: 0,
+      min: 0,
     },
   },
   { timestamps: true },
-);
+)
 
 UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next()
   this.password = await bcrypt.hash(
     this.password,
     Number(config.bcript_salt_rounds),
-  );
+  )
 
-  next();
-});
+  next()
+})
 
 UserSchema.post('save', function (doc, next) {
-  doc.password = '';
-  next();
-});
+  doc.password = ''
+  next()
+})
 
-const UserModel: Model<IUser> = mongoose.model<IUser>('User', UserSchema);
+const UserModel: Model<IUser> = mongoose.model<IUser>('User', UserSchema)
 
-export default UserModel;
+export default UserModel
