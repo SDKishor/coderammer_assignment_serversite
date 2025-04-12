@@ -38,6 +38,8 @@ const loginUser = catchAsync(async (req, res) => {
 const getUserCredit = catchAsync(async (req, res) => {
   const result = await authService.getUserCredit(req.params.userid)
 
+  console.log(!result)
+
   if (!result) {
     return sendResponse(res, {
       statusCode: StatusCodes.BAD_REQUEST,
@@ -51,7 +53,7 @@ const getUserCredit = catchAsync(async (req, res) => {
     statusCode: StatusCodes.OK,
     success: true,
     message: 'user credit fetched successfully',
-    data: result,
+    data: Number(result),
   })
 })
 

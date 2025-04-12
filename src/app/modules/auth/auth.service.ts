@@ -3,8 +3,6 @@ import { IUser } from './user.interface'
 import UserModel from './user.model'
 import { StatusCodes } from 'http-status-codes'
 import bcrypt from 'bcrypt'
-import config from '../../config'
-import jwt from 'jsonwebtoken'
 import { generateToken } from '../../utils/jwt'
 
 const createUser = async (user: IUser) => {
@@ -36,7 +34,7 @@ const loginUser = async (email: string, password: string) => {
     throw new AppError('Invalid credentials', StatusCodes.UNAUTHORIZED)
   }
 
-  const token = generateToken(user._id.toString(), user.role)
+  const token = generateToken(user._id.toString(), user.role, user.name)
 
   const accesstoken = token
 
@@ -52,7 +50,7 @@ const getUserCredit = async (id: string) => {
     throw new AppError('User not found', StatusCodes.NOT_FOUND)
   }
 
-  return user.credit
+  return String(user.credit)
 }
 
 export const authService = {

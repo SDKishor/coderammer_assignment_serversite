@@ -28,7 +28,7 @@ const UserSchema = new Schema<IUser>(
     },
     credit: {
       type: Number,
-      default: 0,
+      default: 0.0,
       min: 0,
     },
   },
