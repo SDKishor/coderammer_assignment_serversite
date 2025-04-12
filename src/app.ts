@@ -11,11 +11,8 @@ const app: Application = express()
 app.use(express.json())
 app.use(
   cors({
-    origin: [
-      'http://localhost:3000', // Local development
-      'https://your-production-frontend.vercel.app', // Production frontend
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    origin: 'https://coderammer-clientside.vercel.app',
+    credentials: true, // if you're using cookies/auth headers
   }),
 )
 
